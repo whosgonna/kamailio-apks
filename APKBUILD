@@ -162,9 +162,6 @@ _mod_list_lua="app_lua app_lua_sr"
 # - modules depending on perl library
 _mod_list_perl="app_perl db_perlvdb"
 
-# - modules depending on python2 library
-# _mod_list_python="app_python"
-
 # - modules depending on ruby library
 _mod_list_ruby="app_ruby"
 
@@ -244,7 +241,7 @@ _mod_list_sipdump="sipdump"
 _mod_list_debugger="$_mod_list_devel benchmark debugger"
 
 # Standard modules in main pkg
-_module_group_kstandard="$_mod_list_basic $_mod_list_dbuid $_mod_list_pcre $_mod_list_sqlite"
+_module_group_kstandard="$_mod_list_basic $_mod_list_dbuid $_mod_list_pcre"
 
 # END Makefile.groups #############################################################
 
@@ -256,7 +253,7 @@ for _i in db postgres sqlite dbtext mysql \
 	extras json websocket authephemeral mongodb\
 	uuid ev memcached redis geoip2 jansson sqlang sipdump \
 	jsdt http_async kazoo rabbitmq sctp radius perl \
-	python3 ruby ; do
+	python3 ruby; do
 
    subpackages="$subpackages $pkgname-$_i"
    eval "_modules=\"\$_modules \$_mod_list_$_i\""
@@ -544,11 +541,6 @@ perl() {
 	_generic_pkg "Perl extensions and database driver for Kamailio" \
 		"$_mod_list_perl"
 }
-
-# python() {
-# 	_generic_pkg "Execute embedded Python2 scripts" \
-# 		"$_mod_list_python"
-# }
 
 ruby() {
 	_generic_pkg "Ruby extensions for Kamailio" \
