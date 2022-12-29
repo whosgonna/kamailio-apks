@@ -9,7 +9,7 @@ image, and less than 40 MB for Kamailio plus DB support.
 The base image contains all of the build tools, etc. for compiling Kamailio
 and creating the APKs.  These pre-requisites should change very litte between
 Kamailio releases, and should only need to be rebuilt periodically for security
-fixes, etc.
+fixes, etc. 
 
 It's build like this:
 
