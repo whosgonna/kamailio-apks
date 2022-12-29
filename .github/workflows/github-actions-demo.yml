@@ -5,8 +5,8 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        run: actions/checkout@v3
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - name: Build Docker base image
         run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
       - run: YMD=${date +%Y-%m-%d}
