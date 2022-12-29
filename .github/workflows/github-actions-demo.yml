@@ -16,8 +16,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: kamailio/kamailio
-          ref: main
-          path: kamailio
+          #ref: main
+          path: mykamailio
       - run: ls ${{ github.workspace }}
 
 #      - name: Build Docker base image
