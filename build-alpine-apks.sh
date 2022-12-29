@@ -8,12 +8,9 @@ then
 fi
 
 
+DOCKER_REG=whosgonna/kamailio-apks
 
-
-DOCKER_REG=registry.nexvortex-cpe.com/engineering/sandbox/kamailio_builds
-
-docker build -f Dockerfile.build-kamailio-apks \
-             -t ${DOCKER_REG}:${KAM_TARGET_VERSION} \
+docker build -t ${DOCKER_REG}:${KAM_TARGET_VERSION} \
              --build-arg KAM_TARGET_VERSION=${KAM_TARGET_VERSION} .
 
 docker push ${DOCKER_REG}:${KAM_TARGET_VERSION}
