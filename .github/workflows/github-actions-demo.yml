@@ -16,9 +16,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: kamailio/kamailio
-          #ref: main
-          path: mykamailio
+          ref: "5.6.2"
+          path: kamailio
       - run: ls ${{ github.workspace }}
+      - run: ls ${{ github.workspace }}/kamailio
 
 #      - name: Build Docker base image
 #        run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
