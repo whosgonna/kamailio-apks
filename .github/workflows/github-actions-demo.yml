@@ -9,8 +9,9 @@ jobs:
         run: actions/checkout@v3
       - name: Build Docker base image
         run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
-      - name: Build alpine APKs:
-        run: docker build -t whosgonna/kamailio-apks:`date +%Y-%m-%d` --build-arg KAM_TARGET_VERSION=main .
+      - run: YMD=${date +%Y-%m-%d}
+      - name: Build alpine APKs
+        run: docker build -t whosgonna/kamailio-apks:date --build-arg KAM_TARGET_VERSION=main .
 
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
