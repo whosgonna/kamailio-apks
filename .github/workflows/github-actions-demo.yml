@@ -2,6 +2,15 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
+  Build:
+    runs-on: ubuntu-latest
+      - name: Checkout Repo
+        run: actions/checkout@v3
+      - name: Build Docker base image
+        run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
+      - name: Build alpine APKs:
+        run: docker build -t whosgonna/kamailio-apks:`date +%Y-%m-%d` --build-arg KAM_TARGET_VERSION=main .
+
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
