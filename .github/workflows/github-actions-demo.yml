@@ -1,30 +1,41 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Build Docker base image
-        run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
-      - run: YMD=${date +%Y-%m-%d}
-      - name: Build alpine APKs
-        run: docker build -t whosgonna/kamailio-apks:date --build-arg KAM_TARGET_VERSION=main .
-
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+      - name: Checkout Kamailio repository
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: docker compose ps
+        repository: kamailio/kamailio
+        ref: main
+        path: kamailio
+      - run: ls ${{ github.workspace }}
+
+#      - name: Build Docker base image
+#        run: docker build -f base.Dockerfile -t whosgonna/kamailio-apk-base-builder:latest .
+#      - name: Build alpine APKs
+#        run: docker build -t whosgonna/kamailio-apks:date --build-arg KAM_TARGET_VERSION=main .
+#
+#  Explore-GitHub-Actions:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+#      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+#      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+#      - name: Check out repository code
+#        uses: actions/checkout@v3
+#      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+#      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+#      - name: List files in the repository
+#        run: |
+#          ls ${{ github.workspace }}
+#      - run: echo "🍏 This job's status is ${{ job.status }}."
+#      - run: docker compose ps
