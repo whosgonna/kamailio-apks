@@ -1,10 +1,11 @@
-FROM whosgonna/kamailio-apk-base-builder:latest 
+ARG ALPINE_VERSION=latest
+FROM whosgonna/kamailio-apk-base-builder:alpine${ALPINE_VERSION} AS builder
 
 USER builder
 
-COPY ./APKBUILD /APKBUILD
-
 ARG KAM_TARGET_VERSION=master
+
+COPY ./APKBUILD.${KAM_TARGET_VERSION} /APKBUILD
 
 RUN    cd ~/kamailio_src \
     && git fetch \
@@ -17,4 +18,9 @@ RUN    cd ~/kamailio_src \
     && cd ~/kamailio_src/pkg/kamailio/alpine \
     && abuild -r
 
+
+FROM scratch
+
+COPY --from=builder /home/builder/packages /home/builder/packages
+COPY --from=builder /home/builder/.abuild /home/builder/.abuild
 
