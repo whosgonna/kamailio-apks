@@ -21,7 +21,7 @@ docker build -t $DOCKER_BASE_IMG \
 DOCKER_REG=${DOCKER_REG_USER}/kamailio-apks
 DOCKER_TAG="alpine-${ALPINE_VERSION}_kamailio-${KAM_TARGET_VERSION}"
 
-OUT_DIR=./apk/${KAM_TARGET_VERSION}/v${ALPINE_VERSION}
+OUT_DIR=./docs/${KAM_TARGET_VERSION}/v${ALPINE_VERSION}
 
 #cp ./abuild/*.pub ./apk
 
