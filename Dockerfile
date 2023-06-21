@@ -19,6 +19,11 @@ RUN    cd ~/kamailio_src \
     && abuild -r
 
 
+FROM scratch AS binaries
+
+COPY --from=builder /home/builder/packages /
+COPY --from=builder /home/builder/.abuild/*.pub /kamailio/x86_64/
+
 FROM scratch
 
 COPY --from=builder /home/builder/packages /home/builder/packages
