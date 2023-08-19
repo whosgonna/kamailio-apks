@@ -13,6 +13,9 @@ fi
 
 DOCKER_BASE_REG=${DOCKER_REG_USER}/kamailio-apk-base-builder
 DOCKER_BASE_IMG=${DOCKER_BASE_REG}:alpine${ALPINE_VERSION}
+
+echo "Building ${DOCKER_BASE_IMG}\n";
+
 docker build -t $DOCKER_BASE_IMG \
              --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
              -f base.Dockerfile \
@@ -30,10 +33,13 @@ then
     mkdir -p $OUT_DIR
 fi
 
+echo "Building ${DOCKER_REG}:${DOCKER_TAG}\n";
 docker build -t ${DOCKER_REG}:${DOCKER_TAG} \
              --build-arg KAM_TARGET_VERSION=${KAM_TARGET_VERSION} \
              --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
-             --output=${OUT_DIR} --target=binaries .
+             .
 
-#docker push ${DOCKER_REG}:${DOCKER_TAG}
+#             --output=${OUT_DIR} --target=binaries .
+
+docker push ${DOCKER_REG}:${DOCKER_TAG}
 

@@ -11,6 +11,8 @@ RUN    cd ~/kamailio_src \
     && git fetch \
     && git checkout ${KAM_TARGET_VERSION} \
     && git pull origin ${KAM_TARGET_VERSION} \
+    && cd /csecsipid \
+    && cp secsipid.h libsecsipid.h libsecsipid.a ~/kamailio_src/src/modules/secsipid_proc/ \
     && cp /APKBUILD ~/kamailio_src/pkg/kamailio/alpine/APKBUILD \
     && cd ~/kamailio_src/pkg/kamailio \
     && make cfg \
