@@ -37,7 +37,9 @@ echo "Building ${DOCKER_REG}:${DOCKER_TAG}\n";
 docker build -t ${DOCKER_REG}:${DOCKER_TAG} \
              --build-arg KAM_TARGET_VERSION=${KAM_TARGET_VERSION} \
              --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
-             --output=${OUT_DIR} --target=binaries .
+             --output=${OUT_DIR} --target=binaries \
+             .
 
-docker push ${DOCKER_REG}:${DOCKER_TAG}
+
+#docker push ${DOCKER_REG}:${DOCKER_TAG}
 
