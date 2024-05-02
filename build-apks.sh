@@ -12,7 +12,7 @@ git fetch
 git checkout -q ${KAM_TARGET_VERSION}
 git pull origin ${KAM_TARGET_VERSION}
 
-cp /APKBUILDS/APKBUILD.${KAM_TARGET_VERSION} ~/kamailio_src/pkg/kamailio/alpine/APKBUILD
+cp /home/builder/APKBUILDS/APKBUILD.${KAM_TARGET_VERSION} ~/kamailio_src/pkg/kamailio/alpine/APKBUILD
 
 cd ~/kamailio_src/pkg/kamailio
 make cfg
