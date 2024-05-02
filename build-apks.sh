@@ -5,7 +5,7 @@ ALPINE_VERSION=$(cat /etc/os-release | grep VERSION_ID | sed -e 's/VERSION_ID=\(
 
 PACKAGECLOUD_USER=${PACKAGECLOUD_USER:-whosgonna}
 PACKAGECLOUD_REPO=${PACKAGECLOUD_REPO:-`uname -m`}
-PACKAGECLOUD_FULL=${PACKAGECLOUD_USER}/${PACKAGECLOUD_REPO}/alpine/v${ALPINE_TARGET_VERSION}
+PACKAGECLOUD_FULL=${PACKAGECLOUD_USER}/${PACKAGECLOUD_REPO}/alpine/${ALPINE_VERSION}
 
 cd ~/kamailio_src
 git fetch
@@ -20,7 +20,7 @@ make apk
 cd ~/kamailio_src/pkg/kamailio/alpine
 abuild -r
 
-if [ -z "$DOT_PACKAGECLOUD" ]; then
+if [ ! -z "$DOT_PACKAGECLOUD" ]; then
     echo $DOT_PACKAGECLOUD > ~/.packagecloud
     echo "\n\nPushing to package cloud repo ${PACKAGECLOUD_FULL}"
     package_cloud push ${PACKAGECLOUD_FULL} ~/packages/kamailio/`uname -m`/*.apk
