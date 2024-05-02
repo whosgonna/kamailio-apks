@@ -26,6 +26,8 @@ USER builder
 RUN git clone https://github.com/kamailio/kamailio.git /home/builder/kamailio_src
 WORKDIR /home/builder/kamailio_src
 
+ENV PATH "$PATH:/home/builder/bin"
+
 COPY --chown=builder:builder build-apks.sh /home/builder/bin/build-apks.sh
 
 
