@@ -11,7 +11,8 @@ pkgrel=0
 # If building a proper release, leave gitcommit blank or commented
 _gitcommit=991fe9b28e0e201309048f3b38a135037e40357a
 
-[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}.$(date +%Y%m%d)"
+#[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}.$(date +%Y%m%d)"
+[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}"
 [ ! -z "${_gitcommit}" ] && _suffix="-${_gitcommit:0:7}"
 [ ! -z "${_gitcommit}" ] && builddir="$srcdir/$pkgname-$_gitcommit" || builddir="$srcdir/$pkgname-$pkgver"
 [ -z "${_gitcommit}" ] && _gitcommit="${pkgver}"
@@ -83,7 +84,7 @@ _mod_list_devel="misctest print print_lib"
 # - kemix module
 _mod_list_kemix="kemix"
 
-_mod_list_secsipid="secsipid secsipid_proc"
+# _mod_list_secsipid="secsipid secsipid_proc"
 
 # - LOST
 _mod_list_lost="lost"
@@ -274,7 +275,7 @@ _module_group_kstandard="$_mod_list_basic $_mod_list_dbuid $_mod_list_pcre"
 
 subpackages="$pkgname-doc $pkgname-dbg $pkgname-openrc"
 _modules="$_module_group_kstandard"
-for _i in secsipid mqtt kafka lost kemix db postgres sqlite dbtext mysql \
+for _i in mqtt kafka lost kemix db postgres sqlite dbtext mysql \
 	cpl xml unixodbc snmpstats xmpp carrierroute \
 	ldap utils tls presence lua ims outbound debugger \
 	extras json websocket authephemeral mongodb\
@@ -320,9 +321,9 @@ prepare() {
 	sed -i -e 's:/bin/bash:/bin/sh:' kamctl kamdbctl \
 		|| return 1
 
-    cp /csecsipid/libsecsipid.a ${builddir}/src/modules/secsipid_proc/
-    cp /csecsipid/libsecsipid.h ${builddir}/src/modules/secsipid_proc/
-    cp /csecsipid/secsipid.h ${builddir}/src/modules/secsipid_proc/
+#    cp /csecsipid/libsecsipid.a ${builddir}/src/modules/secsipid_proc/
+#    cp /csecsipid/libsecsipid.h ${builddir}/src/modules/secsipid_proc/
+#    cp /csecsipid/secsipid.h ${builddir}/src/modules/secsipid_proc/
 }
 
 build() {
@@ -447,10 +448,10 @@ kemix() {
 		"$_mod_list_kemix"
 }
 
-secsipid() {
-    _generic_pkg "Secure SIP/Telephony Identity (STIR/SHAKEN) extensions" \
-		"$_mod_list_secsipid"
-}
+#secsipid() {
+#    _generic_pkg "Secure SIP/Telephony Identity (STIR/SHAKEN) extensions" \
+#		"$_mod_list_secsipid"
+#}
 
 lost() {
     _generic_pkg "HELD (RFC6155) and LOST (RFC5222) location-based routing" \

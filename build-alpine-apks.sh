@@ -16,7 +16,10 @@ DOCKER_BASE_IMG=${DOCKER_BASE_REG}:alpine${ALPINE_VERSION}
 
 echo "Building ${DOCKER_BASE_IMG}\n";
 
+docker pull alpine:${ALPINE_VERSION};
+
 docker build -t $DOCKER_BASE_IMG \
+             --no-cache \
              --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
              -f base.Dockerfile \
              .
@@ -24,7 +27,7 @@ docker build -t $DOCKER_BASE_IMG \
 DOCKER_REG=${DOCKER_REG_USER}/kamailio-apks
 DOCKER_TAG="alpine-${ALPINE_VERSION}_kamailio-${KAM_TARGET_VERSION}"
 
-OUT_DIR=./docs/${KAM_TARGET_VERSION}/v${ALPINE_VERSION}
+OUT_DIR=./pkgs/${KAM_TARGET_VERSION}/v${ALPINE_VERSION}
 
 #cp ./abuild/*.pub ./apk
 
@@ -37,7 +40,9 @@ echo "Building ${DOCKER_REG}:${DOCKER_TAG}\n";
 docker build -t ${DOCKER_REG}:${DOCKER_TAG} \
              --build-arg KAM_TARGET_VERSION=${KAM_TARGET_VERSION} \
              --build-arg ALPINE_VERSION=${ALPINE_VERSION} \
-             --output=${OUT_DIR} --target=binaries .
+             --output=${OUT_DIR} --target=binaries \
+             .
 
-docker push ${DOCKER_REG}:${DOCKER_TAG}
+
+#docker push ${DOCKER_REG}:${DOCKER_TAG}
 
