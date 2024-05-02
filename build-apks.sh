@@ -5,7 +5,7 @@ ALPINE_VERSION=$(cat /etc/os-release | grep VERSION_ID | sed -e 's/VERSION_ID=\(
 
 PACKAGECLOUD_USER=${PACKAGECLOUD_USER:-whosgonna}
 PACKAGECLOUD_REPO=${PACKAGECLOUD_REPO:-`uname -m`}
-PACKAGECLOUD_FULL=${PACKAGECLOUD_USER}/${PACKAGECLOUD_REPO}/alpine/v${KAM_TARGET_VERSION}
+PACKAGECLOUD_FULL=${PACKAGECLOUD_USER}/${PACKAGECLOUD_REPO}/alpine/v${ALPINE_TARGET_VERSION}
 
 cd ~/kamailio_src
 git fetch
@@ -26,7 +26,7 @@ if [ -z "$DOT_PACKAGECLOUD" ]; then
     package_cloud push ${PACKAGECLOUD_FULL} ~/packages/kamailio/`uname -m`/*.apk
 fi
 
-
+exit;
 
 # package_cloud push whosgonna/x86_64/alpine/v3.19 docs/5.8.0/v3.19/kamailio/x86_64/*.apk
 
