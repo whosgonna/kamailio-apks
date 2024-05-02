@@ -2,5 +2,5 @@
 *.rsa
 .env
 /docs
-/pkgs
-
+/pkgs/*
+!/pkgs/.gitinclude
