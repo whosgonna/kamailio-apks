@@ -22,7 +22,7 @@ abuild -r
 
 if [ -z "$DOT_PACKAGECLOUD" ]; then
     echo $DOT_PACKAGECLOUD > ~/.packagecloud
-    echo "Pushing to package cloud repo ${PACKAGECLOUD_FULL}"
+    echo "\n\nPushing to package cloud repo ${PACKAGECLOUD_FULL}"
     package_cloud push ${PACKAGECLOUD_FULL} ~/packages/kamailio/`uname -m`/*.apk
 fi
 
