@@ -1,4 +1,7 @@
 #!/bin/sh
+
+## This is the script that runs INSIDE of the pre-build container to
+## build and upload the APKs.
 KAM_TARGET_VERSION=${1}
 
 ALPINE_VERSION=$(cat /etc/os-release | grep VERSION_ID | sed -e 's/VERSION_ID=\(\d*\.\d*\).*/v\1/')
@@ -20,7 +23,6 @@ make apk
 cd ~/kamailio_src/pkg/kamailio/alpine
 abuild -r
 
-exit;
 
 if [ ! -z "$DOT_PACKAGECLOUD" ]; then
     echo $DOT_PACKAGECLOUD > ~/.packagecloud
