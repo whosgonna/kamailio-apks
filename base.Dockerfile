@@ -17,9 +17,9 @@ RUN apk add --no-cache bison db-dev flex freeradius-client-dev expat-dev \
         net-snmp-dev libuuid libev-dev jansson-dev json-c-dev libevent-dev \
         linux-headers libmemcached-dev rabbitmq-c-dev hiredis-dev \
         ruby-dev libmaxminddb-dev libunistring-dev mongo-c-driver-dev \
-        libwebsockets-dev mosquitto-dev librdkafka-dev wolfssl-dev libjwt-dev \
-    && gem update --system \
-    && gem install package_cloud
+        libwebsockets-dev mosquitto-dev librdkafka-dev wolfssl-dev libjwt-dev
+#RUN gem update --system
+#RUN gem install package_cloud
 
 
 USER builder
@@ -30,5 +30,4 @@ ENV PATH "$PATH:/home/builder/bin"
 
 COPY --chown=builder:builder build-apks.sh /home/builder/bin/build-apks.sh
 COPY --chown=builder:builder APKBUILDS /home/builder/APKBUILDS
-
 

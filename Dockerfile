@@ -1,31 +1,10 @@
-ARG ALPINE_VERSION=latest
-FROM whosgonna/kamailio-apk-base-builder:alpine${ALPINE_VERSION} AS builder
+ARG ALPINE_VERSION=${ALPINE_VERSION:-latest}
 
-USER builder
+FROM whosgonna/kamailio-apk-base-builder:alpine_${ALPINE_VERSION}
 
-ARG KAM_TARGET_VERSION=master
-
-COPY ./APKBUILD.${KAM_TARGET_VERSION} /APKBUILD
-
-RUN    cd ~/kamailio_src \
-    && git fetch \
-    && git checkout ${KAM_TARGET_VERSION} \
-    && git pull origin ${KAM_TARGET_VERSION} \
-    && cp /APKBUILD ~/kamailio_src/pkg/kamailio/alpine/APKBUILD \
-    && cd ~/kamailio_src/pkg/kamailio \
-    && make cfg \
-    && make apk \
-    && cd ~/kamailio_src/pkg/kamailio/alpine \
-    && abuild -r
+RUN    gem update --system \
+    && gem install package_cloud
 
 
-FROM scratch AS binaries
 
-COPY --from=builder /home/builder/packages /
-COPY --from=builder /home/builder/.abuild/*.pub /kamailio/x86_64/
-
-FROM scratch
-
-COPY --from=builder /home/builder/packages /home/builder/packages
-COPY --from=builder /home/builder/.abuild /home/builder/.abuild
 
