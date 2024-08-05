@@ -10,6 +10,7 @@ RUN    gem update --system \
 USER builder
 
 COPY abuild /home/builder/.abuild
+COPY APKBUILDS /home/builder/APKBUILDS
 
 #ENTRYPOINT /home/builder/bin/build-apks.sh
 
