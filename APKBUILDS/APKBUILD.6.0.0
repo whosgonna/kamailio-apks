@@ -4,15 +4,14 @@
 # Maintainer: Nathan Angelacos <nangel@alpinelinux.org>
 
 pkgname=kamailio
-pkgver=5.7.2
+pkgver=6.0.0
 pkgrel=0
 
 # If building from a git snapshot, specify the gitcommit
 # If building a proper release, leave gitcommit blank or commented
-_gitcommit=991fe9b28e0e201309048f3b38a135037e40357a
+# _gitcommit=991fe9b28e0e201309048f3b38a135037e40357a
 
-#[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}.$(date +%Y%m%d)"
-[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}"
+[ ! -z "${_gitcommit}" ] && pkgver="${pkgver}.$(date +%Y%m%d)"
 [ ! -z "${_gitcommit}" ] && _suffix="-${_gitcommit:0:7}"
 [ ! -z "${_gitcommit}" ] && builddir="$srcdir/$pkgname-$_gitcommit" || builddir="$srcdir/$pkgname-$pkgver"
 [ -z "${_gitcommit}" ] && _gitcommit="${pkgver}"
@@ -28,8 +27,8 @@ depends="gawk"
 options="!check"
 makedepends="bison db-dev flex freeradius-client-dev expat-dev
 	lksctp-tools-dev perl-dev postgresql-dev python3-dev
-	pcre2-dev mariadb-dev libxml2-dev curl-dev
-	confuse-dev ncurses-dev lua-dev openldap-dev openssl-dev
+	pcre2-dev mariadb-dev libxml2-dev curl-dev unixodbc-dev
+	confuse-dev ncurses-dev sqlite-dev lua-dev openldap-dev openssl-dev
 	net-snmp-dev libuuid libev-dev jansson-dev json-c-dev libevent-dev
 	linux-headers libmemcached-dev rabbitmq-c-dev hiredis-dev
 	ruby-dev libmaxminddb-dev libunistring-dev mongo-c-driver-dev
@@ -79,7 +78,7 @@ _mod_list_dbuid="db2_ops uid_auth_db uid_avp_db uid_domain uid_gflags \
 		uid_uri_db"
 
 # - modules for devel purposes
-_mod_list_devel="misctest print print_lib"
+_mod_list_devel="misctest"
 
 # - kemix module
 _mod_list_kemix="kemix"
@@ -106,6 +105,9 @@ _mod_list_mysql="db_mysql"
 
 # - modules depending on postgres client library
 _mod_list_postgres="db_postgres"
+
+# - modules depending on unixodbc library
+_mod_list_unixodbc="db_unixodbc"
 
 # - modules depending on mysql cassandra library
 _mod_list_cassandra="db_cassandra ndb_cassandra"
@@ -167,7 +169,7 @@ _mod_list_presence="presence presence_conference presence_dialoginfo \
 			rls xcap_client xcap_server"
 
 # - modules depending on lua library
-_mod_list_lua="app_lua app_lua_sr"
+_mod_list_lua="app_lua"
 
 # - modules depending on perl library
 _mod_list_perl="app_perl db_perlvdb"
@@ -186,6 +188,9 @@ _mod_list_rabbitmq="rabbitmq"
 
 # - modules depending on geoip2 library
 _mod_list_geoip2="geoip2"
+
+# - modules depending on sqlite library
+_mod_list_sqlite="db_sqlite"
 
 # - modules depending on oracle library
 _mod_list_oracle="db_oracle"
@@ -228,7 +233,7 @@ _mod_list_kazoo="kazoo"
 # - modules depending on mongodb
 _mod_list_mongodb="db_mongodb ndb_mongodb"
 
-# - modules depending on  app_ruby_procjansson library
+# - modules depending on jansson library
 _mod_list_jansson="acc_json jansson janssonrpcc"
 
 # - modules depending on libm
@@ -269,8 +274,8 @@ _module_group_kstandard="$_mod_list_basic $_mod_list_dbuid $_mod_list_pcre"
 
 subpackages="$pkgname-doc $pkgname-dbg $pkgname-openrc"
 _modules="$_module_group_kstandard"
-for _i in mqtt kafka lost jwt kemix db postgres dbtext mysql \
-	cpl xml snmpstats xmpp carrierroute \
+for _i in mqtt kafka lost jwt kemix db postgres sqlite dbtext mysql \
+	cpl xml unixodbc snmpstats xmpp carrierroute \
 	ldap utils tls presence lua ims outbound debugger \
 	extras json websocket authephemeral mongodb\
 	uuid ev memcached redis geoip2 jansson sipdump \
@@ -384,6 +389,10 @@ mysql() {
 	_db_driver Mysql mysql mysql mysql
 }
 
+sqlite() {
+	_db_driver SQlite sqlite db_sqlite sqlite
+}
+
 dbtext() {
 	_db_driver DBText text dbtext dbtext || return 1
 	# kamdbctl.dbtext is a python script - but we will not make python
@@ -408,6 +417,11 @@ xml() {
 	mkdir -p "$subpkgdir"/etc/kamailio/
 	mv "$pkgdir"/etc/kamailio/pi_framework.xml \
 		"$subpkgdir"/etc/kamailio || return 1
+}
+
+unixodbc() {
+	_generic_pkg "Database drivers for unixodbc" \
+		"$_mod_list_unixodbc"
 }
 
 snmpstats() {
