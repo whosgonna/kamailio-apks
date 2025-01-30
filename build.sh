@@ -13,13 +13,13 @@ docker build \
 
 CONATINER_NAME="kam-apk-alp${ALPINE_VERSION}-kam${KAM_TARGET_VERSION}"
 
-docker run \
+docker run --rm \
     --env-file .env \
     -v ./abuild:/home/builder/.abuild \
+    --name ${CONTAINER_NAME} \
     apk_builder:alpine-${ALPINE_VERSION} \
-    build-apks.sh ${KAM_TARGET_VERSION}
+    build-apks.sh ${KAM_TARGET_VERSION} \
 
-# --name ${CONTAINER_NAME} \
 
 
 
