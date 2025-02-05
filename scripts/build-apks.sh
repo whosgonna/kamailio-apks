@@ -28,7 +28,7 @@ if [ ! -z "$DOT_PACKAGECLOUD" ]; then
     echo $DOT_PACKAGECLOUD > ~/.packagecloud
     echo "\n\nPushing to package cloud repo ${PACKAGECLOUD_FULL}"
     # ote that next time you can push directly to alpine/v3.19 by specifying whosgonna/x86_64/alpine/v3.19 on the commandline.
-    package_cloud push ${PACKAGECLOUD_FULL} ~/packages/kamailio/`uname -m`/*.apk
+    package_cloud push --skip-duplicates ${PACKAGECLOUD_FULL} ~/packages/kamailio/`uname -m`/*.apk
 fi
 
 exit;
