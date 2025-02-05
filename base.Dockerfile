@@ -19,6 +19,15 @@ RUN apk add --no-cache bison db-dev flex freeradius-client-dev expat-dev \
         ruby-dev libmaxminddb-dev libunistring-dev mongo-c-driver-dev \
         libwebsockets-dev mosquitto-dev librdkafka-dev wolfssl-dev libjwt-dev
 
+RUN <<INSTALL_SECSIPIDX
+    ## Add my packgecloud directory so that we can use secsipidx
+    wget -O /etc/apk/keys/whosgonna_`uname -m`.rsa.pub https://packagecloud.io/whosgonna/`uname -m`/rsakey
+    ALPINE_MAJMIN=$(cat /etc/os-release | grep VERSION_ID | sed -e 's/VERSION_ID=\(\d*\.\d*\).*/v\1/')
+    echo "https://packagecloud.io/whosgonna/`uname -m`/alpine/${ALPINE_MAJMIN}/main" >> /etc/apk/repositories
+
+    apk add --no-cache secsipidx
+INSTALL_SECSIPIDX
+
 
 USER builder
 RUN git clone https://github.com/kamailio/kamailio.git /home/builder/kamailio_src

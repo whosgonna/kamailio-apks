@@ -4,8 +4,11 @@ FROM whosgonna/kamailio-apk-base-builder:alpine_${ALPINE_VERSION}
 
 USER root
 
-RUN    gem update --system \
-    && gem install package_cloud
+RUN <<HEREDOC
+    gem update --system
+    gem install package_cloud
+
+HEREDOC
 
 USER builder
 
