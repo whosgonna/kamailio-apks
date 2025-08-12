@@ -17,7 +17,7 @@ RUN apk add --no-cache bison db-dev flex freeradius-client-dev expat-dev \
         net-snmp-dev libuuid libev-dev jansson-dev json-c-dev libevent-dev \
         linux-headers libmemcached-dev rabbitmq-c-dev hiredis-dev \
         ruby-dev libmaxminddb-dev libunistring-dev mongo-c-driver-dev \
-        libwebsockets-dev mosquitto-dev librdkafka-dev wolfssl-dev libjwt-dev
+        libwebsockets-dev mosquitto-dev librdkafka-dev wolfssl-dev libjwt2-dev
 
 #RUN <<INSTALL_SECSIPIDX
 #    ## Add my packgecloud directory so that we can use secsipidx

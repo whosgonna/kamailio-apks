@@ -6,7 +6,7 @@ USER root
 
 RUN <<HEREDOC
     gem update --system
-    gem install package_cloud
+    gem install package_cloud abbrev
 
 HEREDOC
 
