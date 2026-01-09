@@ -3,7 +3,7 @@ ARG ALPINE_VERSION=latest
 FROM alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache build-base linux-headers bison flex pkgconf abuild wget \
-    alpine-sdk apk-tools doas gawk git musl-dev gpg
+    alpine-sdk apk-tools doas gawk git musl-dev gpg git-archive-all
 
 RUN    adduser --disabled-password builder \
     && addgroup builder wheel \
